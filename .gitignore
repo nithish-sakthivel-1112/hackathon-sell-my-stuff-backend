@@ -141,3 +141,6 @@ dmypy.json
 
 # Terraform
 .terraform
+
+lambda_package.zip
+requirements.txt
