@@ -21,6 +21,10 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_OIDC_ROLE_BACKEND}}
           aws-region: eu-central-1
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
       
       - name: Executing the script to upload artifacts to S3
         run: |
