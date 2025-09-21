@@ -19,7 +19,7 @@ jobs:
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_OIDC_ROLE }}
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_BACKEND}}
           aws-region: eu-central-1
       
       - name: Executing the script to upload artifacts to S3
