@@ -1,0 +1,29 @@
+name: Uploading-artifacts-to-S3
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  upload:
+    s3:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE }}
+          aws-region: eu-central-1
+      
+      - name: Executing the script to upload artifacts to S3
+        run: |
+          chmod +x ./package_code.sh
+          ./package_code.sh
