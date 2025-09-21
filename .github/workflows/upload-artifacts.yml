@@ -26,8 +26,10 @@ jobs:
         run: |
           chmod +x ./package_code.sh
           ./package_code.sh
+          pwd 
+          ls -lrt
       
       - name: Uploading the artifacts to S3
         run: |
           aws s3 cp lambda_package.zip s3://${{ secrets.ARTIFACT_BUCKET_NAME}} --recursive
-          aws s3 cp requirements.txt s3://${{ secrets.ARTIFACT_BUCKET_NAME}} --recursive
+          aws s3 cp dependencies.zip s3://${{ secrets.ARTIFACT_BUCKET_NAME}} --recursive
