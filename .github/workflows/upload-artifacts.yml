@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   upload:
-    s3:
+    s3-upload:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout repository
