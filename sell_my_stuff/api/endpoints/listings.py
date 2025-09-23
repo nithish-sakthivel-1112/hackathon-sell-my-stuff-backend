@@ -30,13 +30,13 @@ async def analyze_image(request: AnalyzeImageRequest):
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Invalid image data: {str(e)}")
 
-        # Call Bedrock to analyze the image
-        model_id = "eu.anthropic.claude-sonnet-4-20250514-v1:0"
-        
+        model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
+
         body = {
             "anthropic_version": "bedrock-2023-05-31",
+            "model_id": model_id,
             "max_tokens": 1000,
-            "system": "You are an expert at creating compelling online marketplace listings. Analyze the provided image of an item for sale and provide:\n\n1. A detailed, attractive description (2-3 sentences) that highlights the item's key features, condition, and appeal to potential buyers. Focus on what makes this item special and why someone would want to buy it.\n\n2. A suggested price range based on the item's apparent condition, brand, and market value.\n\nIMPORTANT: You must respond with valid JSON only. Use this exact format:\n{\n  \"description\": \"your description here\",\n  \"suggested_price\": \"$X - $Y\"\n}\n\nKeep the description engaging but honest, and the price realistic for the used item market. Do not include any text outside the JSON object.",
+            "system": "You are an expert at creating compelling online marketplace listings. Analyze the provided image...",
             "messages": [
                 {
                     "role": "user",
