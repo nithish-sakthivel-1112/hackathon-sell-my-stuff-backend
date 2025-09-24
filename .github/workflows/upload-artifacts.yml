@@ -37,3 +37,33 @@ jobs:
         run: |
           aws s3 cp lambda_package.zip s3://${{ secrets.ARTIFACT_BUCKET_NAME}}
           aws s3 cp dependencies.zip   s3://${{ secrets.ARTIFACT_BUCKET_NAME}} 
+  
+  terraform:
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials using OIDC
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ secrets.AWS_OIDC_ROLE }}
+        aws-region: eu-central-1
+    
+    -  name: Install terraform
+       uses: hashicorp/setup-terraform@v3.1.2
+       with:
+         terraform_version: 1.12.2
+
+    - name: terraform init
+      run: terraform init
+      working-directory: ./terraform
+
+    - name: terraform plan
+      run: terraform plan
+      working-directory: ./terraform
+
+    - name: terraform apply
+      run: terraform apply -auto-approve
+      working-directory: ./terraform
