@@ -14,7 +14,7 @@ paths:
           type: "string"
       responses:
         "200":
-          description: "200 response"
+          description: "CORS response"
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -25,22 +25,27 @@ paths:
             Access-Control-Allow-Headers:
               schema:
                 type: "string"
+            Access-Control-Allow-Credentials:
+              schema:
+                type: "string"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Empty"
       x-amazon-apigateway-integration:
+        type: "mock"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
         responses:
           default:
             statusCode: "200"
             responseParameters:
+              # allow the common headers the browser sends and your custom header
               method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        passthroughBehavior: "when_no_match"
-        type: "mock"
+              method.response.header.Access-Control-Allow-Credentials: "'true'"
+
     x-amazon-apigateway-any-method:
       parameters:
       - name: "proxy"
@@ -54,6 +59,7 @@ paths:
         uri: "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
         httpMethod: "POST"
         type: "aws_proxy"
+
 components:
   schemas:
     Empty:
