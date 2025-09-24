@@ -30,7 +30,7 @@ async def analyze_image(request: AnalyzeImageRequest):
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Invalid image data: {str(e)}")
 
-        model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
+        model_id = "amazon.nova-pro-v1:0"
 
         body = {
             "anthropic_version": "bedrock-2023-05-31",
