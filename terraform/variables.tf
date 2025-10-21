@@ -13,7 +13,7 @@ variable "python_version" {
 variable "artifact_bucket_name" {
   description = "The name of the S3 bucket to store Lambda deployment packages"
   type        = string
-  default     = "app-artifacts-nithish"
+  default     = "app-artifacts-nithish-1"
 }
 
 variable "lambda_function_pack" {
